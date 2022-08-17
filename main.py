@@ -70,6 +70,26 @@ def get_top_active_days(jsonFile):
             else f"{i+1}) {top_active_days[i][0]}: {top_active_days[i][1]} "
         )
 
+def get_top_hashtags(jsonFile):
+    hashtags = {}
+    for tweet in jsonFile:
+        list = [tag for tag in tweet["content"].split() if tag.startswith("#")]
+        for hashtag in list:
+            if hashtag not in hashtags:
+                hashtags[hashtag] = 1
+            else:
+                hashtags[hashtag] += 1
+
+    # obtain the top 10 hashtags
+    top_hashtags = sorted(hashtags.items(), key=lambda x: x[1], reverse=True)[:10]
+
+    for i in range(10):
+        print(
+            f"0{i+1}) {top_hashtags[i][0]}: {top_hashtags[i][1]} "
+            if i < 9
+            else f"{i+1}) {top_hashtags[i][0]}: {top_hashtags[i][1]} "
+        )
+
 
 if __name__ == "__main__":
     general_json = open_file_json("farmers-protest-tweets-2021-03-5.json")
@@ -81,7 +101,8 @@ if __name__ == "__main__":
             \n0) Exit\
             \n1) Get top users \
             \n2) Get top retweeted tweets\
-            \n3) Get top active days"
+            \n3) Get top active days\
+            \n4) Get top hashtags"
         )
         number = input("Enter your choice: ")
         try:
@@ -104,6 +125,10 @@ if __name__ == "__main__":
         elif number == 3:
             print("\n\nTop active days:\n")
             get_top_active_days(general_json)
+        
+        elif number == 4:
+            print("\n\nTop hashtags:\n")
+            get_top_hashtags(general_json)
 
         else:
             print("Invalid input")
