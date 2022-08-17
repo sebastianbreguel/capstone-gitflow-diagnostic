@@ -8,9 +8,11 @@ from utils import (
     open_file_json,
 )
 
+PATH = "farmers-protest-tweets-2021-03-5.json"
 
-if __name__ == "__main__":
-    general_json = open_file_json("farmers-protest-tweets-2021-03-5.json")
+
+def main():
+    general_json = open_file_json(PATH)
     getting = True
 
     while getting:
@@ -51,3 +53,7 @@ if __name__ == "__main__":
         else:
             print("Invalid input")
             continue
+
+
+if __name__ == "__main__":
+    main()
